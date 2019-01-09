@@ -10,3 +10,12 @@ def post_list(request):
 def post_detail(request, post_id):
     post = get_object_or_404(BlogPost, pk=post_id)
     return render(request, 'blog/post_detail.html', {'post': post})
+
+def contact(request):
+	return render(request, 'blog/contact.html')
+
+def about(request):
+	return render(request, 'blog/about.html')
+
+def privacy_policy(request):
+	return render(request, 'blog/privacy_policy.html')
