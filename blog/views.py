@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import BlogPost
+from .models import BlogPost, Feedback
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from .forms import ContactForm
@@ -16,19 +16,20 @@ def post_detail(request, post_id):
 def contact(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
-		if form.is_valid():
-			# insert database write code here
+		if form.is_valid():	
+			Feedback.objects.create(name = form.cleaned_data.get('name'), 
+				email=form.cleaned_data.get('email'), 
+				text =form.cleaned_data.get('text'))
 			return HttpResponseRedirect('/submitted')
 	else:
-		form = NameForm()
-
+		form = ContactForm()
 	return render(request, 'blog/contact.html', {'form': form})
 
 def about(request):
 	return render(request, 'blog/about.html')
 
 def privacy_policy(request):
-	return render(request, 'blog/privacy_policy.html')
+	return render(request, 'blog/privacy_policy.html')	
 
 def submitted(request):
-	
+	return render(request, 'blog/submitted.html')

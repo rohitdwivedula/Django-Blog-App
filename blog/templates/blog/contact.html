@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-<h1>Contact U<s/h1>
-<form action="/your-name/" method="post">
+<h1>Contact Us</h1>
+<form action="/contact" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
