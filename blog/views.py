@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import BlogPost, Feedback
+from .gmailAPI import sendMail
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from .forms import ContactForm
@@ -17,10 +18,19 @@ def contact(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
 		if form.is_valid():	
-			Feedback.objects.create(name = form.cleaned_data.get('name'), 
-				email=form.cleaned_data.get('email'), 
-				text =form.cleaned_data.get('text'))
-			return HttpResponseRedirect('/submitted')
+			name_of_person = form.cleaned_data.get('name')
+			email_id = form.cleaned_data.get('email')
+			message_text = form.cleaned_data.get('text') 
+			Feedback.objects.create(name = name_of_person, email=email_id, text = message_text)
+			response = sendMail(name=name_of_person, email=email_id, text=message_text)
+			if response == False:
+				# mail not sent: success page is not displayed
+				return HttpResponseRedirect('/')
+			else:
+				# success page along with Message ID displayed
+				message_id = response['id']
+				print(message_id)
+				return HttpResponseRedirect('/submitted?id=' + message_id)				
 	else:
 		form = ContactForm()
 	return render(request, 'blog/contact.html', {'form': form})

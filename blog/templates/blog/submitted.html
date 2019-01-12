@@ -1,8 +1,10 @@
 {% extends 'blog/base.html' %}
 {% load static %}
+{% load templatehelpers %}
 {% block content %}
 <h1> Submitted </h1>
-<p> Your feedback has been recorded and we will be in touch with you shortly. A copy of your feedback has also been emailed to you for reference. </p>
+<h2>Message ID: {{ message_id }} </h2>
+<p> Your feedback has been recorded and we will be in touch with you shortly. A copy of your feedback has also been emailed to you for reference. Your reference ID for this communication is displayed above and please note the same for all future communications. </p>
 <center>
 <img src="{% static "green-tick-mark.png" %}" alt = "Green Tick Mark" width = 45%>
 </center>

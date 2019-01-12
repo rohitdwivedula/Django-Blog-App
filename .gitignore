@@ -5,3 +5,5 @@ MyVenv
 db.sqlite3
 static
 .DS_Store
+credentials.json
+token.json
