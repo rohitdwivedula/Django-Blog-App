@@ -6,6 +6,9 @@ from googleapiclient.discovery import build
 import base64
 import csv
 
+# enter the email address you have authorized here
+myEmail = "rohitdwivedula@gmail.com"
+
 # parts of this code are from GMail's API documentation
 
 SCOPES = 'https://www.googleapis.com/auth/gmail.compose'
@@ -24,7 +27,7 @@ def sendMail(name, email, text):
 	# creating the message and encoding as base64
 	message = MIMEText(message_text)
 	message['to'] = email
-	message['from'] = "rohitdwivedula@gmail.com"
+	message['from'] = myEmail
 	message['subject'] = "Feedback on Django Blog: Recorded"
 	b64_message = {'raw': base64.urlsafe_b64encode(message.as_string().encode()).decode()}
 
