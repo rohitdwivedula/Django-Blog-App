@@ -21,6 +21,7 @@ class Feedback(models.Model):
 	email = models.TextField()
 	text = models.TextField()
 	published_time = models.DateTimeField(default = timezone.now)
+	message_id = models.CharField(max_length = 100, blank = True)
 
 	def __str__(self):
 		return (str(self.pk) + ',' + str(self.published_time) + ',' + str(self.name))

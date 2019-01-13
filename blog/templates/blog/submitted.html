@@ -2,8 +2,16 @@
 {% load static %}
 {% block content %}
 <h1> Submitted </h1>
+{% if message_id %}
 <h2> Your Message ID: {{ message_id }} </h2>
+{% else %}
+<h2> Feedback Received </h2>
+{% endif %}
+{% if message_id %}
 <p> Your feedback has been recorded and we will be in touch with you shortly. A copy of your feedback has also been emailed to you for reference. Your reference ID for this communication is displayed above and please note the same for all future communications. </p>
+{% else %}
+<p> Your feedback has been recorded and we will be in touch with you shortly. We were <b>unable to send you a copy of your feedback</b> to your email due to an unknown failure - this might be caused by poor internet connection, or it <b>might have nothing to do with you</b> (might be an issue from our end). We aplogise for this inconvenience and assure you we will get in touch with you ASAP, via the email you've given us. </p>
+{% endif %}
 <center>
 <img src="{% static "green-tick-mark.png" %}" alt = "Green Tick Mark" width = 45%>
 </center>

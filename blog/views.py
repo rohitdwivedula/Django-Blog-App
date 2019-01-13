@@ -21,17 +21,28 @@ def contact(request):
 			name_of_person = form.cleaned_data.get('name')
 			email_id = form.cleaned_data.get('email')
 			message_text = form.cleaned_data.get('text') 
-			Feedback.objects.create(name = name_of_person, email=email_id, text = message_text)
-			response = sendMail(name=name_of_person, email=email_id, text=message_text)
-			if response == False:
-				# mail not sent: success page is not displayed
-				return HttpResponseRedirect('/')
-			else:
+			# saving the object here
+			f = Feedback(name = name_of_person, email=email_id, text = message_text)
+			
+			try:
+				# Try sending email: if successful, response 
+				# will be an object of type Users.messages
+				# Failure in sending will cause response == False 
+				response = sendMail(name=name_of_person, email=email_id, text=message_text)
+				assert response!=False, "Email not sent" 
 				# success page along with Message ID displayed
-				message_id = response['id']
-				print(message_id)
-				# return HttpResponseRedirect('/submitted/' + message_id)				
-				return render(request, 'blog/submitted.html', {'message_id': message_id})
+				print(response['id'])
+				f.message_id = response['id']
+				f.save()
+				return render(request, 'blog/submitted.html', 
+					{'message_id': response['id']})
+
+			except:
+				# acknowledgement email not sent.
+				f.save()
+				print("LOLOLOL")
+				response = False
+				return render(request, 'blog/submitted.html', {'message_id': False})
 	else:
 		form = ContactForm()
 	return render(request, 'blog/contact.html', {'form': form})
