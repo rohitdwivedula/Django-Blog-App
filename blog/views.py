@@ -30,7 +30,8 @@ def contact(request):
 				# success page along with Message ID displayed
 				message_id = response['id']
 				print(message_id)
-				return HttpResponseRedirect('/submitted?id=' + message_id)				
+				# return HttpResponseRedirect('/submitted/' + message_id)				
+				return render(request, 'blog/submitted.html', {'message_id': message_id})
 	else:
 		form = ContactForm()
 	return render(request, 'blog/contact.html', {'form': form})
@@ -41,5 +42,5 @@ def about(request):
 def privacy_policy(request):
 	return render(request, 'blog/privacy_policy.html')	
 
-def submitted(request):
+def submitted(request, message_id):
 	return render(request, 'blog/submitted.html')
